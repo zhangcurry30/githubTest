@@ -17,7 +17,7 @@ jobs:
         run: sudo docker save -o wekan.tar wekan/wekan:latest  # 导出为.tar
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3  # 上传产物
+        uses: actions/upload-artifact@v4  # 上传产物
         with:
           name: wekan.tar  # 产物名称
           path: wekan.tar  # 文件路径
