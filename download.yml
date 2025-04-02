@@ -1,0 +1,17 @@
+name: Export Wekan Image
+on: [workflow_dispatch]
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up Docker
+      run: sudo apt update && sudo apt install docker.io -y
+    - name: Pull Wekan
+      run: sudo docker pull wekan/wekan:latest
+    - name: Save as .tar
+      run: sudo docker save -o wekan.tar wekan/wekan:latest
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: wekan.tar
+        path: wekan.tar
