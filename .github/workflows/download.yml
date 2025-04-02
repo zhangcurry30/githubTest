@@ -11,7 +11,7 @@ jobs:
           sudo apt install docker.io -y
 
       - name: Pull Wekan Image
-        run: sudo docker pull wekan/wekan:latest  # 拉取镜像
+        run: sudo docker pull ghcr.io/wekan/wekan:main  # 拉取镜像
 
       - name: Save as .tar
         run: sudo docker save -o wekan.tar wekan/wekan:latest  # 导出为.tar
