@@ -11,34 +11,30 @@ jobs:
       - name: Set up Docker
         run: |
           sudo apt-get update && sudo apt-get install -y docker.io
-          # 将当前用户添加到 Docker 组（避免权限问题）
           sudo usermod -aG docker $USER
-          newgrp docker  # 重新加载组权限
-          # 验证 Docker 是否安装成功
+          newgrp docker
           docker --version
 
       # 2. 拉取 Wekan 镜像
       - name: Pull Wekan Image
         run: |
           docker pull wekan/wekan:latest
-          # 验证镜像是否存在
           docker images | grep wekan/wekan:latest
 
-      # 3. 导出镜像为 .tar 文件（无需 sudo）
+      # 3. 导出镜像为 .tar 文件
       - name: Save Image as .tar
         run: |
           docker save -o wekan.tar wekan/wekan:latest
-          # 验证文件生成
           ls -lh wekan.tar
 
-      # 4. 上传 Artifact（确保路径正确）
+      # 4. 上传 Artifact
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2  # 使用 v2 版本
         with:
           name: wekan-image
           path: wekan.tar
-          retention-days: 30  # 设置 Artifact 保留天数（默认 90 天）
+          retention-days: 30
 
-      # 5. 可选：清理临时文件（避免占用空间）
+      # 5. 清理临时文件
       - name: Cleanup
         run: rm wekan.tar
